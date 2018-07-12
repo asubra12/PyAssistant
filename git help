@@ -41,3 +41,10 @@ $ git push [alias] [branch]
     Uploads all local branch commits to GitHub
 $ git pull
     Downloads bookmark history and incorporates changes
+
+$ git reset HEAD path/to/unwanted_file
+    Reset unwanted file out of commit
+$ git remote add origin https://github.com/asubra12/PyAssistant.git
+    Create initial push destination
+$ git push -u origin master
+    The classic
