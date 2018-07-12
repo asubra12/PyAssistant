@@ -1,0 +1,186 @@
+# Alpha vantage API: EY2QBMV6MD9FX9CP
+import pandas as pd
+from alpha_vantage.timeseries import TimeSeries
+import time
+import datetime
+
+
+class Tracker():
+    def __init__(self):
+        self.ALPHA_VANTAGE_KEY = 'EY2QBMV6MD9FX9CP'
+        self.TODAY = datetime.datetime.today()
+        self.WAGO_DT = 7
+        self.MAGO_DT = 28
+        self.ts = TimeSeries(key=self.ALPHA_VANTAGE_KEY)
+
+        self.stocks = None
+        self.period = None
+        self.opens = None
+        self.currents = {}
+        return
+
+    def read_stocks(self, stockfile):
+        """
+        Specify stocks to track via an input file.
+        Expected to be upgraded to hit a majority of S&P stocks or industries in future
+
+        :param stockfile: file with new line separated stock tickers to track
+        :return: Nothing
+        """
+
+        with open(stockfile, 'r') as f:
+            stocks = [line.strip() for line in f]
+
+        self.stocks = stocks
+        return
+
+    def set_update_period(self, period):
+        """
+        Set the interval with which to update stock prices.
+        Note that alpha_vantage has some issues with rapid stock grabbing. Over 1 min should be plenty
+
+        :param period: Period between updates, in seconds
+        :return: N/A
+        """
+        self.period = period
+        return
+
+    def get_date_days_ago(self, dt):
+        """
+        Get the date a certain number of days ago
+
+        :param dt: Days difference, in number of days
+        :return: Historical Date as a string
+        """
+        return str(self.TODAY - datetime.timedelta(dt)).split()[0]
+
+    def grab_av_stock_data(self, s):
+        """
+        Continuously attempt to grab alpha_vantage stock data
+        Time delay of 10 seconds if we over-ping
+        outputsize flag allows us to only get last 100 days
+
+        :param s: stock to get
+        :return: daily opens for a stock for last 100 days
+        """
+
+        successful_grab = False
+        daily_opens = None
+
+        while successful_grab is not True:
+            try:
+                daily_opens, _ = self.ts.get_daily_adjusted(s, outputsize='compact')
+                successful_grab = True
+            except ValueError:
+                print('Sleeping for 10')
+                time.sleep(10)
+
+        return daily_opens
+
+    def get_opens(self):
+        """
+        Get the opens from today, a week ago (WAGO) and a month ago (MAGO) for stocks
+        If today, month or week ago was a holiday or weekend, look at the nearest earlier date with data
+        This might shit itself on weekends
+        Store as self.opens for bugfixing and checking later
+
+        :return: nx3 DataFrame, n is number of stocks to look at
+        """
+
+        opens = pd.DataFrame(index=self.stocks, columns=['Today', 'WAGO', 'MAGO'])
+
+        for s in self.stocks:
+            print('Collecting {} data'.format(s))
+
+            daily_opens = self.grab_av_stock_data(s)
+            three_opens = []
+
+            for days_ago in [0, self.WAGO_DT, self.MAGO_DT]:
+                date = self.get_date_days_ago(days_ago)
+
+                while date not in daily_opens:
+                    days_ago += 1
+                    date = self.get_date_days_ago(days_ago)
+
+                open_price = float(daily_opens[date]['1. open'])
+                three_opens.append(open_price)
+
+            opens.loc[s, :] = three_opens
+
+            time.sleep(1)  # AlphaVantage don't hate me
+
+        self.opens = opens
+        return opens
+
+    def get_currents(self):
+        """
+        Get current quotes from stocks and store with a time index
+
+        :return: nx3 DataFrame with current price as all three columns per stock
+        """
+
+        currents = pd.DataFrame(index=self.stocks,
+                                columns=['Today', 'WAGO', 'MAGO'],
+                                dtype=float)
+
+        data, _ = self.ts.get_batch_stock_quotes(symbols=self.stocks)
+        price_quotes = [(s['1. symbol'], float(s['2. price'])) for s in data]
+
+        for (a, b) in price_quotes:
+            currents.loc[a, :] = b
+
+        # Store all the calls within the object, for looking at later
+        self.store_currents(currents['Today'])
+
+        return currents
+
+    def generate_block_update(self, opens, currents):
+        """
+        Create a single update df with changes and opens for today, MAGO, WAGO, and current quote
+
+        :param opens: dataframe of open prices for stocks, from get_opens
+        :param currents: Current stock prices, outputted from get_currents
+        :return: nx7 df with Changes (x3), Current, Opens (x3)
+        """
+        change = ((currents / opens) - 1) * 100
+
+        update = pd.concat([change, currents['Today'], self.opens], axis=1)
+        update.columns = ['Today_Chg',
+                          'WAGO_Chg',
+                          'MAGO_Chg',
+                          'Current',
+                          'Today_Open',
+                          'WAGO_Open',
+                          'MAGO_Open']
+
+        return update
+
+    def store_currents(self, current_prices):
+        """
+        Every time current prices are called, store them
+        This is for future debugging and evaluating purposes
+
+        :param current_prices: df of current prices
+        :return: N/A
+        """
+        time_now = datetime.datetime.now().time()
+        self.currents[time_now] = current_prices
+        return
+
+    def run(self):
+        """
+        Run the entire
+        :return:
+        """
+        opens = self.get_opens()
+
+        while True:
+            currents = self.get_currents()
+            update = self.generate_block_update(opens, currents)
+            print(update)
+            time.sleep(self.period)
+
+tracker = Tracker()
+tracker.set_update_period(20)
+tracker.read_stocks('stocks')
+tracker.run()
