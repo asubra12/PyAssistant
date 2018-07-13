@@ -3,9 +3,10 @@ import pandas as pd
 from alpha_vantage.timeseries import TimeSeries
 import time
 import datetime
+from StockTracker.StockHUD import StockHUD
 
 
-class Tracker():
+class Tracker:
     def __init__(self):
         self.ALPHA_VANTAGE_KEY = 'EY2QBMV6MD9FX9CP'
         self.TODAY = datetime.datetime.today()
@@ -54,28 +55,37 @@ class Tracker():
         """
         return str(self.TODAY - datetime.timedelta(dt)).split()[0]
 
-    def grab_av_stock_data(self, s):
+    def grab_av_stock_data(self, fun, s):
         """
         Continuously attempt to grab alpha_vantage stock data
         Time delay of 10 seconds if we over-ping
         outputsize flag allows us to only get last 100 days
 
+        fun lets us use this same function for batch quotes and opens
+
+        :param fun: Function to ping alpha vantage with
         :param s: stock to get
         :return: daily opens for a stock for last 100 days
         """
 
         successful_grab = False
-        daily_opens = None
+        stock_data = None
 
         while successful_grab is not True:
             try:
-                daily_opens, _ = self.ts.get_daily_adjusted(s, outputsize='compact')
+                if fun == 'opens':
+                    stock_data, _ = self.ts.get_daily_adjusted(s, outputsize='compact')
+                elif fun == 'quotes':
+                    stock_data, _ = self.ts.get_batch_stock_quotes(symbols=self.stocks)
+                else:
+                    print("Function Not Valid")
+                    return
                 successful_grab = True
             except ValueError:
                 print('Sleeping for 10')
                 time.sleep(10)
 
-        return daily_opens
+        return stock_data
 
     def get_opens(self):
         """
@@ -92,7 +102,7 @@ class Tracker():
         for s in self.stocks:
             print('Collecting {} data'.format(s))
 
-            daily_opens = self.grab_av_stock_data(s)
+            daily_opens = self.grab_av_stock_data('opens', s)
             three_opens = []
 
             for days_ago in [0, self.WAGO_DT, self.MAGO_DT]:
@@ -123,7 +133,7 @@ class Tracker():
                                 columns=['Today', 'WAGO', 'MAGO'],
                                 dtype=float)
 
-        data, _ = self.ts.get_batch_stock_quotes(symbols=self.stocks)
+        data = self.grab_av_stock_data('quotes', None)
         price_quotes = [(s['1. symbol'], float(s['2. price'])) for s in data]
 
         for (a, b) in price_quotes:
@@ -169,7 +179,7 @@ class Tracker():
 
     def run(self):
         """
-        Run the entire
+        Run the entire stock tracking system
         :return:
         """
         opens = self.get_opens()
@@ -180,7 +190,11 @@ class Tracker():
             print(update)
             time.sleep(self.period)
 
-tracker = Tracker()
-tracker.set_update_period(20)
-tracker.read_stocks('stocks')
-tracker.run()
+
+if __name__ == "__main__":
+    tracker = Tracker()
+    tracker.set_update_period(20)
+    tracker.read_stocks('StockTracker/stocks')
+    shud = StockHUD(tracker)
+    shud.run_tracker()
+
