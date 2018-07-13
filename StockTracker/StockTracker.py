@@ -32,6 +32,8 @@ class Tracker:
         with open(stockfile, 'r') as f:
             stocks = [line.strip() for line in f]
 
+        stocks = [x for x in stocks if x]  # In case there's an extra blank space
+
         self.stocks = stocks
         return
 

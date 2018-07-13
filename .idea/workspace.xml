@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9f53e44-a079-45d4-94f7-91beba33e6e0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/StockTracker/StockHUD.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/StockTracker/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/StockTracker/stocks" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Stock Tracker/stocks" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Application Management/Applications.py" afterPath="$PROJECT_DIR$/ApplicationManagement/Applications.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Application Management/Popen Notes" afterPath="$PROJECT_DIR$/ApplicationManagement/Popen Notes" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Key Pressing/VolumeChanger.py" afterPath="$PROJECT_DIR$/KeyPressing/VolumeChanger.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Speech Recognition/.idea/Speech Recognition.iml" afterPath="$PROJECT_DIR$/SpeechRecognition/.idea/Speech Recognition.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Speech Recognition/.idea/misc.xml" afterPath="$PROJECT_DIR$/SpeechRecognition/.idea/misc.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Speech Recognition/.idea/modules.xml" afterPath="$PROJECT_DIR$/SpeechRecognition/.idea/modules.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Speech Recognition/.idea/workspace.xml" afterPath="$PROJECT_DIR$/SpeechRecognition/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Speech Recognition/py_listener.py" afterPath="$PROJECT_DIR$/SpeechRecognition/PyListener.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Stock Tracker/.idea/Stock Tracker.iml" afterPath="$PROJECT_DIR$/StockTracker/.idea/Stock Tracker.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Stock Tracker/.idea/misc.xml" afterPath="$PROJECT_DIR$/StockTracker/.idea/misc.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Stock Tracker/.idea/modules.xml" afterPath="$PROJECT_DIR$/StockTracker/.idea/modules.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Stock Tracker/.idea/workspace.xml" afterPath="$PROJECT_DIR$/StockTracker/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Stock Tracker/Stock Tracker.py" afterPath="$PROJECT_DIR$/StockTracker/StockTracker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StockTracker/StockTracker.py" afterPath="$PROJECT_DIR$/StockTracker/StockTracker.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StockTracker/stocks" afterPath="$PROJECT_DIR$/StockTracker/stocks" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -78,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StockTracker.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="StockTracker.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/StockTracker/StockTracker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2265">
-              <caret line="151" column="34" lean-forward="false" selection-start-line="151" selection-start-column="34" selection-end-line="151" selection-end-column="34" />
+            <state relative-caret-position="312">
+              <caret line="34" column="74" lean-forward="false" selection-start-line="34" selection-start-column="74" selection-end-line="34" selection-end-column="74" />
               <folding>
                 <element signature="e#38#57#0" expanded="true" />
               </folding>
@@ -93,8 +78,8 @@
       <file leaf-file-name="stocks" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/StockTracker/stocks">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="195">
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -112,7 +97,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/StockTracker/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -151,9 +136,9 @@
         <option value="$PROJECT_DIR$/Stock Tracker/StockHUD.py" />
         <option value="$PROJECT_DIR$/Stock Tracker/stocks" />
         <option value="$PROJECT_DIR$/Stock Tracker/StockTracker.py" />
-        <option value="$PROJECT_DIR$/StockTracker/StockTracker.py" />
         <option value="$PROJECT_DIR$/StockTracker/StockHUD.py" />
         <option value="$PROJECT_DIR$/StockTracker/stocks" />
+        <option value="$PROJECT_DIR$/StockTracker/StockTracker.py" />
       </list>
     </option>
   </component>
@@ -512,30 +497,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/StockTracker/stocks">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ApplicationManagement/Applications.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1335">
           <caret line="89" column="29" lean-forward="false" selection-start-line="89" selection-start-column="29" selection-end-line="89" selection-end-column="29" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/StockTracker/StockTracker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2265">
-          <caret line="151" column="34" lean-forward="false" selection-start-line="151" selection-start-column="34" selection-end-line="151" selection-end-column="34" />
-          <folding>
-            <element signature="e#38#57#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -555,6 +522,24 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StockTracker/stocks">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StockTracker/StockTracker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="34" column="74" lean-forward="false" selection-start-line="34" selection-start-column="74" selection-end-line="34" selection-end-column="74" />
+          <folding>
+            <element signature="e#38#57#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
