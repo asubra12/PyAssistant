@@ -76,11 +76,11 @@ class ApplicationPuppet:
         new_instance = new_instance_command or not self.is_running(activity_monitor_app_name)
 
         if new_instance:
-            process = subprocess.Popen(["open", "-n", "/Applications/" + true_app_name],
+            process = subprocess.Popen(["open", "-n", "-W", "/Applications/" + true_app_name],
                                        stdout=subprocess.PIPE,
                                        shell=False)
         else:
-            process = subprocess.Popen(["open", "/Applications/" + true_app_name],
+            process = subprocess.Popen(["open", "-W", "/Applications/" + true_app_name],
                                        stdout=subprocess.PIPE,
                                        shell=False)
         self.processes.append(process)
@@ -128,3 +128,6 @@ class ApplicationPuppet:
         true_app_name = self.get_app_name(self.appNames, app_to_kill)
         subprocess.call(['osascript', '-e', 'tell application "' + true_app_name + '" to quit'])
         return
+
+
+

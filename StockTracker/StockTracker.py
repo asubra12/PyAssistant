@@ -3,7 +3,7 @@ import pandas as pd
 from alpha_vantage.timeseries import TimeSeries
 import time
 import datetime
-from StockTracker.StockHUD import StockHUD
+import argparse
 
 
 class Tracker:
@@ -35,6 +35,16 @@ class Tracker:
         stocks = [x for x in stocks if x]  # In case there's an extra blank space
 
         self.stocks = stocks
+        return
+
+    def specify_stocks(self, list_of_stocks):
+        """
+        Input specific stocks to check instead of going fromt he list
+
+        :param list_of_stocks: List of str tickers
+        :return: Nothing
+        """
+        self.stocks = list_of_stocks
         return
 
     def set_update_period(self, period):
@@ -189,14 +199,45 @@ class Tracker:
         while True:
             currents = self.get_currents()
             update = self.generate_block_update(opens, currents)
+
             print(update)
+            print('\n')
             time.sleep(self.period)
 
 
 if __name__ == "__main__":
+    """
+    Run by python3 -m StockTracker.StockTracker --stocks NTAP GOOG IBM etc. etc.
+    & at end of command to run in background
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--stocks',
+                        nargs="*",
+                        type=str,
+                        default=None)
+
+    parser.add_argument('--period',
+                        nargs="*",
+                        type=int,
+                        default=20)
+
+    parser.add_argument('--textonly', dest='textonly', action='store_true')
+    parser.set_defaults(textonly=True)
+
+    args = parser.parse_args()
+
     tracker = Tracker()
-    tracker.set_update_period(20)
-    tracker.read_stocks('StockTracker/stocks')
-    shud = StockHUD(tracker)
-    shud.run_tracker()
+    tracker.set_update_period(args.period)
+
+    if args.stocks is not None:
+        tracker.specify_stocks(args.stocks)
+    else:
+        tracker.read_stocks('StockTracker/stocks')
+
+    if args.textonly:
+        tracker.run()
+    else:
+        from StockTracker.StockHUD import StockHUD
+        shud = StockHUD(tracker)
+        shud.run_tracker()
 

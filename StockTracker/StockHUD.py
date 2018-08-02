@@ -20,7 +20,6 @@ class StockHUD:
             self.update_hud(update)
 
             plt.pause(self.tracker.period)
-            print('asdf')
 
         return
 
@@ -28,7 +27,7 @@ class StockHUD:
 
         update = update.astype(float)
 
-        h = 7 * len(update.index) / 9
+        h = 7.7
 
         if not plt.get_fignums():
             fig, ax = plt.subplots(figsize=(3, h))
